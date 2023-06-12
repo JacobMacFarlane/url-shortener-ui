@@ -13,7 +13,6 @@ const UrlForm = (props) => {
         long_url: urlToShorten
       }
       const response = await postUrl(newUrl)
-      console.log(response)
       if (response) {
         props.updateUrls(response)
         clearInputs();
