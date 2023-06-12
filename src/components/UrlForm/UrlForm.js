@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import { postUrl } from '../../apiCalls';
 const UrlForm = (props) => {
-  console.log(props, 'in UrlForm');
   const [title, setTitle] = useState('');
   const [urlToShorten, setUrlToShorten] = useState('');
 
