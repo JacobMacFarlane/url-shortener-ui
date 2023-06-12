@@ -1,20 +1,28 @@
 import React, { useState } from 'react';
-
-const UrlForm = () => {
+import { postUrl } from '../../apiCalls';
+const UrlForm = (props) => {
+  console.log(props, 'in UrlForm');
   const [title, setTitle] = useState('');
   const [urlToShorten, setUrlToShorten] = useState('');
 
-  const handleNameChange = (event) => {
-if (event.target.name === 'title') {
-  setTitle(event.target.value);
-} else if (event.target.name === 'urlToShorten') {
-  setUrlToShorten(event.target.value);
-} 
-}
-
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    clearInputs();
+    try {
+      const newUrl = {
+        title: title,
+        long_url: urlToShorten
+      }
+      const response = await postUrl(newUrl)
+      console.log(response)
+      if (response) {
+        props.updateUrls(response)
+        clearInputs();
+      } else {
+        console.log('messed up creating new url')
+      }
+    } catch (error) {
+      console.log('i have caught an error', error)
+    }
   }
 
   const clearInputs = () => {
@@ -30,15 +38,15 @@ if (event.target.name === 'title') {
           placeholder='Title...'
           name='title'
           value={title}
-          onChange={handleNameChange}
+          onChange={event => setTitle(event.target.value)}
         />
 
         <input
           type='text'
           placeholder='URL to Shorten...'
-          name='title'
+          name='urlToShorten'
           value={urlToShorten}
-          onChange={handleNameChange}
+          onChange={event => setUrlToShorten(event.target.value)}
         />
 
         <button onClick={handleSubmit}>

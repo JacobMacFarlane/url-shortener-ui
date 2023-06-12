@@ -6,32 +6,39 @@ import UrlForm from '../UrlForm/UrlForm';
 
 export const App = () => {
   const [urls, setUrls] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+const updateUrls = (newUrl) => {
+  setUrls([...urls, newUrl])
+}
 
 
-
+const fetchUrls = async () => {
+  try {
+    const data = await getUrls();
+    setUrls(data.urls)
+  } catch (error) {
+    console.log('Error grabbing data', error)
+  } finally {
+    setIsLoading(false);
+  }
+}
  
   useEffect(() => {
-    const fetchUrls = async () => {
-      try {
-        const data = await getUrls();
-        setUrls(data)
-      } catch (error) {
-        console.log('Error grabbing data', error)
-      }
-    }
-
     fetchUrls();
   }, [])
-
-  
+console.log(urls, 'app console')
     return (
       <main className="App">
         <header>
           <h1>URL Shortener</h1>
-          <UrlForm />
+          <UrlForm updateUrls={updateUrls}/>
         </header>
-
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : (
         <UrlContainer urls={urls}/>
+      )}
       </main>
     );
 }
