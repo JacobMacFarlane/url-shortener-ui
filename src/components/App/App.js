@@ -1,21 +1,29 @@
-import React, { Component } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import { getUrls } from '../../apiCalls';
 import UrlContainer from '../UrlContainer/UrlContainer';
 import UrlForm from '../UrlForm/UrlForm';
 
-export class App extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      urls: []
+export const App = () => {
+  const [urls, setUrls] = useState([]);
+
+
+
+ 
+  useEffect(() => {
+    const fetchUrls = async () => {
+      try {
+        const data = await getUrls();
+        setUrls(data)
+      } catch (error) {
+        console.log('Error grabbing data', error)
+      }
     }
-  }
 
-  componentDidMount() {
-  }
+    fetchUrls();
+  }, [])
 
-  render() {
+  
     return (
       <main className="App">
         <header>
@@ -23,10 +31,9 @@ export class App extends Component {
           <UrlForm />
         </header>
 
-        <UrlContainer urls={this.state.urls}/>
+        <UrlContainer urls={urls}/>
       </main>
     );
-  }
 }
 
 export default App;
