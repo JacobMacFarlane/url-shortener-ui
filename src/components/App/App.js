@@ -27,7 +27,6 @@ const fetchUrls = async () => {
   useEffect(() => {
     fetchUrls();
   }, [])
-console.log(urls, 'app console')
     return (
       <main className="App">
         <header>

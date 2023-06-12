@@ -2,23 +2,19 @@ import React, {useState} from 'react';
 import './UrlContainer.css';
 
 const UrlContainer = (props) => {
-  console.log(props.urls, 'props');
-
-  // const [theUrls, setTheUrls] = useState(props.urls);
-  // console.log(theUrls, 'theUrls');
 
   const urlEls = props.urls.map((url,index) => {
     return (
       <div key={index} className="url">
         <h3>{url.title}</h3>
-        <a href={url.short_url} target="blank">{url.short_url}</a>
+        <a className='short-url' href={url.short_url} target="blank">{url.short_url}</a>
         <p>{url.long_url}</p>
       </div>
     )
   });
 
   return (
-    <section>
+    <section className='url-cont'>
       { urlEls.length ? urlEls : <p>No urls yet! Find some to shorten!</p> }
     </section>
   )

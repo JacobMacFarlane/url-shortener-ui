@@ -32,11 +32,12 @@ const UrlForm = (props) => {
 
   
     return (
-      <form>
+      <form className='form-class'>
         <input
           type='text'
           placeholder='Title...'
           name='title'
+          className='input-1'
           value={title}
           onChange={event => setTitle(event.target.value)}
         />
@@ -45,6 +46,7 @@ const UrlForm = (props) => {
           type='text'
           placeholder='URL to Shorten...'
           name='urlToShorten'
+          className='input-2'
           value={urlToShorten}
           onChange={event => setUrlToShorten(event.target.value)}
         />
